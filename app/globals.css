@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+.light-mode {
+  background-color: white;
+  color: black;
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
