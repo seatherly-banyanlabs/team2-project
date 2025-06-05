@@ -1,7 +1,7 @@
 import ThemeToggle from "@/components/ThemeToggle";
 import Image from "next/image";
 // import MoodHistoryEntry, { MoodEntry } from "@/components/MoodHistoryEntry";
-// import Header from "@/components/Header";
+
 
 
 
