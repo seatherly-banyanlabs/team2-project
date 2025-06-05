@@ -27,19 +27,22 @@ const FeelingButton: React.FC<FeelingButtonProps> = ({
   size = 'medium',
 }) => {
   return (
-    <button
-      onClick={onClick}
-      aria-pressed={selected}
-      aria-label={`Select mood: ${mood}`}
-      className={classNames(
-        'rounded-full shadow-md text-white font-medium transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white',
-        `bg-gradient-to-br ${gradient}`,
-        selected ? 'scale-105 ring-2 ring-white' : 'hover:scale-105',
-        sizeClasses[size]
-      )}
-    >
-      {emoji}
-    </button>
+<button
+  onClick={onClick}
+  aria-pressed={selected}
+  aria-label={`Select mood: ${mood}`}
+  className={classNames(
+    'flex flex-col items-center justify-center px-4 py-6 rounded-lg shadow-md transition-transform',
+    'w-[168px] h-[99px]',
+    selected
+      ? `text-white bg-gradient-to-br ${gradient}`
+      : 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white hover:scale-105'
+  )}
+>
+  <span className="text-4xl mb-2">{emoji}</span>
+  <span className="text-sm font-medium text-black">{mood}</span> {/* ← black text always */}
+</button>
+
   );
 };
 
