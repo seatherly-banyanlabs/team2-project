@@ -1,6 +1,4 @@
-// components/Header.tsx
 "use client";
-
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,7 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 import { Calendar, List, BarChart2 } from "lucide-react";
 
 export default function Header() {
-  const path = usePathname(); // e.g. "/tracker", "/history", "/stats"
+  const path = usePathname();
   const isActive = (href: string) => path === href;
 
   return (
@@ -109,6 +107,7 @@ export default function Header() {
           </ul>
         </div>
       </nav>
-    </header>
-  );
-}
+</header>
+);
+} 
+
