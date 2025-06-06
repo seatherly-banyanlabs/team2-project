@@ -1,15 +1,19 @@
-'use client';
+// // app/layout.tsx or app/providers.tsx
+// import { MoodProvider } from "@/context/MoodContext";
+// import { ThemeProvider } from "next-themes";
 
-import { ThemeProvider } from 'next-themes';
-import React from 'react';
-
-export default function Provider({
-  children
-}: { children: React.ReactNode;
-}) {
-    return ( 
-    <ThemeProvider 
-    attribute="class" 
-    defaultTheme="system" enableSystem>{children}</ThemeProvider>
-)
-  }
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <html lang="en">
+//       <body>
+//         <ThemeProvider attribute="class">
+//           <MoodProvider>{children}</MoodProvider>
+//         </ThemeProvider>
+//       </body>
+//     </html>
+//   );
+// }

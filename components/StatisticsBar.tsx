@@ -1,116 +1,72 @@
-// components/StatusBar.tsx
+// components/StatisticsBar.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 
-export type StatusType = "excellent" | "good" | "okay" | "poor" | "bad";
+export type StatusType = "excellent" | "good" | "neutral" | "sad" | "verySad";
 
-export interface StatusBarProps {
- 
-  status?: StatusType;
-
- 
+export interface StatisticsBarProps {
+  /** Which status this is (used only for ARIA) */
+  status: StatusType;
+  /** A number from 0 to 100 (fill percentage) */
+  percentage: number;
+  /** Tailwind “from-X to-Y” gradient classes for the fill */
+  gradient: string;
+  /** Animate from 0 → percentage on mount? */
   animated?: boolean;
-
-  /**
-   * Duration (ms) of the width transition if `animated=true`. Default: 800.
-   */
+  /** How many ms the width transition takes */
   animationDuration?: number;
-
-  /**
-   * Override ARIA label (defaults to "Status Progress").
-   */
+  /** Optional ARIA label override */
   ariaLabel?: string;
 }
 
-const StatusBar: React.FC<StatusBarProps> = ({
-  status = "excellent",
+const StatisticsBar: React.FC<StatisticsBarProps> = ({
+  status,
+  percentage,
+  gradient,
   animated = true,
   animationDuration = 800,
   ariaLabel,
 }) => {
-  // Map status to percentage, gradient, and emoji
-  const mapping: Record<
-    StatusType,
-    { percentage: number; gradient: string; emoji: string }
-  > = {
-    excellent: {
-      percentage: 100,
-      gradient: "from-green-400 to-green-600",
-      emoji: "😄",
-    },
-    good: {
-      percentage: 75,
-      gradient: "from-lime-400 to-lime-600",
-      emoji: "😊",
-    },
-    okay: {
-      percentage: 50,
-      gradient: "from-yellow-300 to-yellow-500",
-      emoji: "😐",
-    },
-    poor: {
-      percentage: 25,
-      gradient: "from-orange-400 to-orange-600",
-      emoji: "😔",
-    },
-    bad: { percentage: 0, gradient: "from-red-400 to-red-600", emoji: "😢" },
-  };
-
-  const { percentage: targetPct, gradient, emoji } = mapping[status];
-
-  // Internal state to animate fill width
-  const [fill, setFill] = useState<number>(animated ? 0 : targetPct);
+  // Animate from 0 → percentage if requested
+  const [fill, setFill] = useState<number>(animated ? 0 : percentage);
 
   useEffect(() => {
     if (!animated) {
-      setFill(targetPct);
+      setFill(percentage);
       return;
     }
     const id = window.setTimeout(() => {
-      setFill(targetPct);
+      setFill(percentage);
     }, 50);
     return () => window.clearTimeout(id);
-  }, [targetPct, animated]);
+  }, [percentage, animated]);
 
   return (
     <div className="w-full space-y-1">
-      {/* Emoji + Status Label */}
-      <div className="flex items-center space-x-2">
-        <span className="text-xl">{emoji}</span>
-        <span className="font-medium text-gray-700 dark:text-gray-300 capitalize">
-          {status}
-        </span>
-      </div>
-
-      {/* Track (full gradient) */}
+      {/* The “rail” (gray or dark‐gray) */}
       <div
         role="progressbar"
-        aria-label={ariaLabel ?? "Status Progress"}
+        aria-label={ariaLabel ?? `${status} percentage`}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(fill)}
-        className={`
-          w-full h-4 rounded overflow-hidden 
-          bg-gradient-to-r ${gradient}
-        `}
+        className="relative w-full h-4 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700"
       >
-        {/* Gray “cover” on the right that shrinks as fill grows */}
-        <div
-          className="h-full bg-gray-200 dark:bg-gray-700"
-          style={{
-            width: `${100 - fill}%`,
-            transition: animated
-              ? `width ${animationDuration}ms ease-in-out`
-              : undefined,
-            position: "absolute",
-            top: 0,
-            right: 0,
-          }}
-        />
+        {/* Only render the filled portion if percentage > 0 */}
+        {percentage > 0 && (
+          <div
+            className={`absolute top-0 left-0 h-full bg-gradient-to-r ${gradient}`}
+            style={{
+              width: `${fill}%`,
+              transition: animated
+                ? `width ${animationDuration}ms ease-in-out`
+                : undefined,
+            }}
+          />
+        )}
       </div>
-
-      {/* Percentage Text */}
+      {/* Percent text below */}
       <div className="text-right text-xs font-semibold text-gray-600 dark:text-gray-400">
         {Math.round(fill)}%
       </div>
@@ -118,4 +74,4 @@ const StatusBar: React.FC<StatusBarProps> = ({
   );
 };
 
-export default StatusBar;
+export default StatisticsBar;
