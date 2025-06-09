@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import React from "react";
 import TrackerForm from "@/components/TrackerForm";
@@ -15,5 +16,39 @@ export default function Home() {
         </main>
       </div>
     </>
+=======
+mport ThemeToggle from "@/components/ThemeToggle";
+
+import MoodHistoryEntry, { MoodEntry } from "@/components/MoodHistoryEntry";
+
+export default function Home() {
+
+ const sampleEntry: MoodEntry = {
+
+  mood: "Excellent",
+
+  date: new Date().toISOString(),
+
+  note: "Feeling great today!",
+
+};
+
+
+return (
+
+  <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+
+      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+
+        <ThemeToggle />
+
+      <MoodHistoryEntry entry={sampleEntry} />
+
+      </main>
+
+    </div>
+
+>>>>>>> e95522b464bf69db2ec3fe5a2163e1eca4caa013
   );
+
 }
