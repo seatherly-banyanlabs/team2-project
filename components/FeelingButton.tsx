@@ -9,22 +9,16 @@ interface FeelingButtonProps {
   gradient: string;
   selected: boolean;
   onClick: () => void;
-  size?: 'small' | 'medium' | 'large';
+  // size?: 'small' | 'medium' | 'large';
 }
 
-const sizeClasses = {
-  small: 'text-xl py-1 px-2',
-  medium: 'text-2xl py-2 px-4',
-  large: 'text-3xl py-3 px-6',
-};
 
-const FeelingButton: React.FC<FeelingButtonProps> = ({
+const FeelingButton: React.FC<Omit<FeelingButtonProps, 'size'>> = ({
   emoji,
   mood,
   gradient,
   selected,
   onClick,
-  size = 'medium',
 }) => {
   return (
 <button

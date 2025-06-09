@@ -56,7 +56,6 @@ export default function TestFeeling() {
               gradient={gradient}
               selected={selectedMood === mood}
               onClick={() => setSelectedMood(mood)}
-              size="large"
             />
           ))}
         </div>

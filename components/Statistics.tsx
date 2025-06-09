@@ -78,7 +78,7 @@ export default function Statistics() {
           const count = counts[moodKey] || 0;
           // ← Correct percentage formula:
           const pct = total > 0 ? (count / total) * 100 : 0;
-          const status = mapMoodToStatus(moodKey);
+          const status = mapMoodToStatus(moodKey)!; // Non-null assertion since ORDER matches all moods
           const gradient = gradientMap[status];
 
           return (
